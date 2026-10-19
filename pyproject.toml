@@ -1,0 +1,43 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pyfinews"
+version = "0.1.0"
+description = "A lightweight Python package for discovering financial news headlines through Google News RSS."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [{ name = "pyfinews contributors" }]
+keywords = ["finance", "financial-news", "google-news", "rss", "quantitative-research"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Financial and Insurance Industry",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Office/Business :: Financial",
+]
+dependencies = ["feedparser>=6.0.11,<7.0"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "build>=1.2", "ruff>=0.6"]
+article-text = ["trafilatura>=2.0,<3.0"]
+url-resolution = ["googlenewsdecoder>=0.1.7", "selectolax<1.0"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pyfinews"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"src/pyfinews/taxonomy/default_taxonomy.json" = "pyfinews/taxonomy/default_taxonomy.json"
+"src/pyfinews/publishers/default_publishers.json" = "pyfinews/publishers/default_publishers.json"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"

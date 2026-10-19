@@ -1,0 +1,284 @@
+{
+  "publishers": [
+    {
+      "id": "reuters",
+      "name": "Reuters",
+      "aliases": [
+        "Reuters News",
+        "Reuters.com"
+      ],
+      "regions": [
+        "global",
+        "north_america",
+        "europe",
+        "asia"
+      ],
+      "enabled": true,
+      "priority": 1
+    },
+    {
+      "id": "bloomberg",
+      "name": "Bloomberg",
+      "aliases": [
+        "Bloomberg News",
+        "Bloomberg.com"
+      ],
+      "regions": [
+        "global",
+        "north_america",
+        "europe",
+        "asia"
+      ],
+      "enabled": true,
+      "priority": 2
+    },
+    {
+      "id": "financial_times",
+      "name": "Financial Times",
+      "aliases": [
+        "FT",
+        "FT.com"
+      ],
+      "regions": [
+        "global",
+        "north_america",
+        "europe",
+        "asia"
+      ],
+      "enabled": true,
+      "priority": 3
+    },
+    {
+      "id": "wall_street_journal",
+      "name": "The Wall Street Journal",
+      "aliases": [
+        "WSJ",
+        "Wall Street Journal"
+      ],
+      "regions": [
+        "north_america",
+        "global"
+      ],
+      "enabled": true,
+      "priority": 4
+    },
+    {
+      "id": "cnbc",
+      "name": "CNBC",
+      "aliases": [
+        "CNBC International",
+        "CNBC.com"
+      ],
+      "regions": [
+        "north_america",
+        "europe",
+        "asia"
+      ],
+      "enabled": true,
+      "priority": 5
+    },
+    {
+      "id": "yahoo_finance",
+      "name": "Yahoo Finance",
+      "aliases": [
+        "Yahoo! Finance",
+        "Yahoo Finance UK",
+        "Yahoo Finance Canada"
+      ],
+      "regions": [
+        "north_america",
+        "europe",
+        "asia"
+      ],
+      "enabled": true,
+      "priority": 6
+    },
+    {
+      "id": "marketwatch",
+      "name": "MarketWatch",
+      "aliases": [
+        "MarketWatch.com"
+      ],
+      "regions": [
+        "north_america",
+        "global"
+      ],
+      "enabled": true,
+      "priority": 7
+    },
+    {
+      "id": "barrons",
+      "name": "Barron's",
+      "aliases": [
+        "Barrons"
+      ],
+      "regions": [
+        "north_america",
+        "global"
+      ],
+      "enabled": true,
+      "priority": 8
+    },
+    {
+      "id": "associated_press",
+      "name": "Associated Press",
+      "aliases": [
+        "AP",
+        "AP News"
+      ],
+      "regions": [
+        "global",
+        "north_america"
+      ],
+      "enabled": true,
+      "priority": 9
+    },
+    {
+      "id": "the_economist",
+      "name": "The Economist",
+      "aliases": [
+        "Economist.com"
+      ],
+      "regions": [
+        "global",
+        "europe",
+        "north_america",
+        "asia"
+      ],
+      "enabled": true,
+      "priority": 10
+    },
+    {
+      "id": "handelsblatt",
+      "name": "Handelsblatt",
+      "aliases": [
+        "Handelsblatt Global"
+      ],
+      "regions": [
+        "europe",
+        "global"
+      ],
+      "enabled": true,
+      "priority": 11
+    },
+    {
+      "id": "les_echos",
+      "name": "Les Échos",
+      "aliases": [
+        "Les Echos",
+        "LesEchos.fr"
+      ],
+      "regions": [
+        "europe"
+      ],
+      "enabled": true,
+      "priority": 12
+    },
+    {
+      "id": "il_sole_24_ore",
+      "name": "Il Sole 24 Ore",
+      "aliases": [
+        "IlSole24Ore"
+      ],
+      "regions": [
+        "europe"
+      ],
+      "enabled": true,
+      "priority": 13
+    },
+    {
+      "id": "nikkei_asia",
+      "name": "Nikkei Asia",
+      "aliases": [
+        "Nikkei",
+        "Nikkei Asia Review"
+      ],
+      "regions": [
+        "asia",
+        "global"
+      ],
+      "enabled": true,
+      "priority": 14
+    },
+    {
+      "id": "south_china_morning_post",
+      "name": "South China Morning Post",
+      "aliases": [
+        "SCMP"
+      ],
+      "regions": [
+        "asia",
+        "global"
+      ],
+      "enabled": true,
+      "priority": 15
+    },
+    {
+      "id": "caixin_global",
+      "name": "Caixin Global",
+      "aliases": [
+        "Caixin"
+      ],
+      "regions": [
+        "asia",
+        "global"
+      ],
+      "enabled": true,
+      "priority": 16
+    },
+    {
+      "id": "the_business_times",
+      "name": "The Business Times",
+      "aliases": [
+        "BT",
+        "The Business Times Singapore"
+      ],
+      "regions": [
+        "asia"
+      ],
+      "enabled": true,
+      "priority": 17
+    },
+    {
+      "id": "economic_times",
+      "name": "The Economic Times",
+      "aliases": [
+        "Economic Times",
+        "ET Markets"
+      ],
+      "regions": [
+        "asia",
+        "global"
+      ],
+      "enabled": true,
+      "priority": 18
+    },
+    {
+      "id": "korea_economic_daily_global",
+      "name": "Korea Economic Daily Global",
+      "aliases": [
+        "KED Global",
+        "The Korea Economic Daily"
+      ],
+      "regions": [
+        "asia",
+        "global"
+      ],
+      "enabled": true,
+      "priority": 19
+    },
+    {
+      "id": "the_japan_times",
+      "name": "The Japan Times",
+      "aliases": [
+        "Japan Times"
+      ],
+      "regions": [
+        "asia",
+        "global"
+      ],
+      "enabled": true,
+      "priority": 20
+    }
+  ]
+}

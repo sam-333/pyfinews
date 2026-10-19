@@ -1,0 +1,194 @@
+{
+  "domains": [
+    {
+      "id": "financial_markets",
+      "name": "Financial Markets",
+      "description": "Broad market performance, trading conditions, volatility, and cross-asset developments.",
+      "enabled": true,
+      "query_terms": [
+        "stock market",
+        "equity markets",
+        "global markets",
+        "market volatility",
+        "market selloff",
+        "market rally",
+        "investor sentiment"
+      ]
+    },
+    {
+      "id": "macroeconomics",
+      "name": "Macroeconomics",
+      "description": "Economic growth, inflation, employment, consumption, business activity, and recession risks.",
+      "enabled": true,
+      "query_terms": [
+        "economic growth",
+        "inflation",
+        "employment",
+        "labor market",
+        "recession",
+        "consumer spending",
+        "business activity",
+        "GDP growth"
+      ]
+    },
+    {
+      "id": "central_banks_monetary_policy",
+      "name": "Central Banks and Monetary Policy",
+      "description": "Central-bank decisions, policy rates, monetary-policy guidance, liquidity, and balance-sheet policy.",
+      "enabled": true,
+      "query_terms": [
+        "central bank",
+        "interest rates",
+        "monetary policy",
+        "Federal Reserve",
+        "rate cuts",
+        "rate hikes",
+        "quantitative tightening",
+        "quantitative easing"
+      ]
+    },
+    {
+      "id": "fixed_income_credit",
+      "name": "Fixed Income and Credit",
+      "description": "Government bonds, sovereign yields, corporate credit, credit spreads, and debt markets.",
+      "enabled": true,
+      "query_terms": [
+        "bond market",
+        "Treasury yields",
+        "government bonds",
+        "corporate bonds",
+        "credit spreads",
+        "high yield debt",
+        "sovereign debt",
+        "credit markets"
+      ]
+    },
+    {
+      "id": "foreign_exchange",
+      "name": "Foreign Exchange",
+      "description": "Currency markets, exchange rates, currency intervention, and foreign-exchange policy.",
+      "enabled": true,
+      "query_terms": [
+        "foreign exchange",
+        "currency markets",
+        "US dollar",
+        "Japanese yen",
+        "euro exchange rate",
+        "currency intervention",
+        "emerging market currencies"
+      ]
+    },
+    {
+      "id": "commodities_natural_resources",
+      "name": "Commodities and Natural Resources",
+      "description": "Energy, metals, agriculture, commodity supply and demand, and natural-resource markets.",
+      "enabled": true,
+      "query_terms": [
+        "oil prices",
+        "natural gas prices",
+        "gold prices",
+        "copper prices",
+        "commodity markets",
+        "agricultural commodities",
+        "OPEC production",
+        "energy markets"
+      ]
+    },
+    {
+      "id": "corporate_earnings_developments",
+      "name": "Corporate Earnings and Company Developments",
+      "description": "Company earnings, guidance, mergers and acquisitions, capital allocation, and material corporate news.",
+      "enabled": true,
+      "query_terms": [
+        "corporate earnings",
+        "earnings results",
+        "earnings guidance",
+        "mergers and acquisitions",
+        "share buybacks",
+        "dividend announcements",
+        "IPO market",
+        "company outlook"
+      ]
+    },
+    {
+      "id": "sectors_industries",
+      "name": "Sectors and Industries",
+      "description": "Developments affecting major economic sectors, industry groups, and supply chains.",
+      "enabled": true,
+      "query_terms": [
+        "technology sector",
+        "semiconductor industry",
+        "banking sector",
+        "healthcare industry",
+        "real estate market",
+        "automotive industry",
+        "consumer goods companies",
+        "industrial sector"
+      ]
+    },
+    {
+      "id": "geopolitics_government_fiscal_policy",
+      "name": "Geopolitics, Government, and Fiscal Policy",
+      "description": "Geopolitical events, trade policy, sanctions, government spending, taxation, and public debt.",
+      "enabled": true,
+      "query_terms": [
+        "geopolitical risk",
+        "trade tariffs",
+        "trade policy",
+        "economic sanctions",
+        "fiscal policy",
+        "government spending",
+        "budget deficit",
+        "public debt"
+      ]
+    },
+    {
+      "id": "regulation_legal_accounting",
+      "name": "Regulation, Legal Affairs, and Accounting",
+      "description": "Financial regulation, competition policy, litigation, accounting standards, and enforcement actions.",
+      "enabled": true,
+      "query_terms": [
+        "financial regulation",
+        "securities regulation",
+        "antitrust investigation",
+        "corporate litigation",
+        "accounting standards",
+        "regulatory enforcement",
+        "bank capital rules",
+        "market oversight"
+      ]
+    },
+    {
+      "id": "fund_flows_positioning",
+      "name": "Fund Flows, Positioning, and Investor Behavior",
+      "description": "Fund flows, institutional positioning, investor allocations, short interest, and market sentiment.",
+      "enabled": true,
+      "query_terms": [
+        "fund flows",
+        "ETF flows",
+        "institutional investors",
+        "hedge fund positioning",
+        "short interest",
+        "investor positioning",
+        "asset allocation",
+        "retail investors"
+      ]
+    },
+    {
+      "id": "sustainable_finance_climate",
+      "name": "Sustainable Finance, Climate, and Energy Transition",
+      "description": "Climate-related financial risk, sustainable investment, carbon markets, and energy-transition economics.",
+      "enabled": true,
+      "query_terms": [
+        "sustainable finance",
+        "ESG investing",
+        "climate risk",
+        "carbon markets",
+        "carbon prices",
+        "energy transition",
+        "renewable energy investment",
+        "green bonds"
+      ]
+    }
+  ]
+}
