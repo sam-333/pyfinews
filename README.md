@@ -2,7 +2,7 @@
 
 `pyfinews` is a lightweight Python library for discovering financial-news headlines through Google News RSS. It provides a high-level client API, configurable financial-domain taxonomy, publisher-priority query planning, date filtering, normalized article models, Google News URL resolution, and article-text extraction.
 
-The package uses Python's standard library for HTTP transport, `feedparser` for RSS/Atom parsing, `googlenewsdecoder` and `selectolax` for resolving Google News links, and Trafilatura for downloading publisher pages and extracting main article text. These are runtime dependencies and are installed automatically with `pyfinews`.
+The package uses Python's standard library for HTTP transport, `feedparser` for RSS/Atom parsing, `googlenewsdecoder` for resolving Google News links, and Trafilatura for downloading publisher pages and extracting main article text. These are runtime dependencies and are installed automatically with `pyfinews`.
 
 ## Features
 
