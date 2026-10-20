@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pyfinews"
-version = "0.1.6"
+version = "0.1.7"
 description = "A lightweight Python package for discovering financial news headlines through Google News RSS."
 readme = "README.md"
 requires-python = ">=3.12"
