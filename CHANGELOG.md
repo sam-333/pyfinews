@@ -4,6 +4,24 @@ All notable changes to `pyfinews` are documented in this file.
 
 This project uses a simplified version of [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Version numbers follow the principles of [Semantic Versioning](https://semver.org/), with the understanding that `0.y.z` releases are initial development releases and the public API may change.
 
+## [0.1.7] - 2026-10-20
+
+### Changed
+- Updated `CHANGELOG.md` to reflect the latest package changes and maintain a consistent release history.
+
+## [0.1.6] - 2026-10-20
+
+### Added
+- Introduced a dedicated `_version.py` module to centralize package version access and the default HTTP User-Agent string.
+
+### Changed
+- Updated `__init__.py` to expose `__version__` through the centralized version module.
+- Updated `article_text.py` and `providers/google_news.py` to use the shared `DEFAULT_USER_AGENT`, keeping HTTP User-Agent strings consistent with the installed package version.
+- Improved internal version handling to avoid circular imports when accessing package metadata.
+
+### Fixed
+- Fixed an import error caused by internal modules importing `__version__` from a partially initialized `pyfinews` package.
+
 ## [0.1.5] - 2026-10-20
 
 ### Changed
