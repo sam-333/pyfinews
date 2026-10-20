@@ -3,9 +3,13 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+
 import trafilatura
 
+from pyfinews import __version__
 from pyfinews.models import ArticleTextStatus, NewsArticle
+
+DEFAULT_USER_AGENT = f"pyfinews/{__version__}"
 
 
 @dataclass(frozen=True, slots=True)
@@ -30,7 +34,12 @@ class ArticleTextExtractor:
     ``uv sync --extra article-text`` from a source checkout.
     """
 
-    def __init__(self, *, timeout: float = 15.0, user_agent: str = "pyfinews/0.1.0") -> None:
+    def __init__(
+        self, 
+        *, 
+        timeout: float = 15.0, 
+        user_agent: str = DEFAULT_USER_AGENT
+    ) -> None:
         if isinstance(timeout, bool) or not isinstance(timeout, (int, float)) or timeout <= 0:
             raise ValueError("timeout must be greater than zero")
 

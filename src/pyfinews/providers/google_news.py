@@ -10,9 +10,12 @@ from urllib.request import Request, urlopen
 
 import feedparser
 
+from pyfinews import __version__
 from pyfinews.exceptions import NewsFetchError, NewsParseError
 from pyfinews.models import NewsArticle
 from pyfinews.queries.google_news import GoogleNewsQuery
+
+DEFAULT_USER_AGENT = f"pyfinews/{__version__}"
 
 logger = logging.getLogger(__name__)
 
@@ -20,7 +23,12 @@ logger = logging.getLogger(__name__)
 class GoogleNewsRSSProvider:
     """Fetch Google News RSS search results and normalize them with feedparser."""
 
-    def __init__(self, *, timeout: float = 10.0, user_agent: str = "pyfinews/0.1.0") -> None:
+    def __init__(
+        self, 
+        *, 
+        timeout: float = 10.0, 
+        user_agent: str = DEFAULT_USER_AGENT
+    ) -> None:
         if isinstance(timeout, bool) or not isinstance(timeout, (int, float)) or timeout <= 0:
             raise ValueError("timeout must be greater than zero")
         self.timeout = float(timeout)
