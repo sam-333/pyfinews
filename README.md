@@ -187,10 +187,10 @@ uv run ruff check .
 uv run python -m compileall -q src tests
 ```
 
-An optional live RSS check is available at `scripts/validate_rss.py`. It makes external network requests, so it is separate from the unit test suite:
+An optional live run is available at `scripts/get_news.py`. It makes external network requests, so it is separate from the unit test suite:
 
 ```bash
-uv run python scripts/validate_rss.py
+uv run python scripts/get_news.py
 ```
 
 ## Important behavior and limitations
