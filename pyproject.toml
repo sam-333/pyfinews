@@ -20,12 +20,19 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
   "Topic :: Office/Business :: Financial",
 ]
-dependencies = ["feedparser>=6.0.11,<7.0"]
+dependencies = [
+    "feedparser>=6.0.11,<7.0",
+    "trafilatura>=2.0,<3.0",
+    "googlenewsdecoder>=0.1.7",
+    "selectolax<1.0",
+]
 
 [project.optional-dependencies]
-dev = ["pytest>=8.0", "build>=1.2", "ruff>=0.6"]
-article-text = ["trafilatura>=2.0,<3.0"]
-url-resolution = ["googlenewsdecoder>=0.1.7", "selectolax<1.0"]
+dev = [
+    "pytest>=8.0",
+    "build>=1.2",
+    "ruff>=0.6",
+]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/pyfinews"]
