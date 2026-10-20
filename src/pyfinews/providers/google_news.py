@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timedelta, timezone
 import logging
+from datetime import UTC, datetime, timedelta
 from time import struct_time
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
@@ -59,7 +59,7 @@ class GoogleNewsRSSProvider:
                 "Accept": "application/rss+xml, application/xml, text/xml",
             },
         )
-        retrieved_at = datetime.now(timezone.utc)
+        retrieved_at = datetime.now(UTC)
 
         try:
             with urlopen(request, timeout=self.timeout) as response:
@@ -124,7 +124,7 @@ class GoogleNewsRSSProvider:
 
         articles.sort(
             key=lambda article: article.published_at
-            or datetime.min.replace(tzinfo=timezone.utc),
+            or datetime.min.replace(tzinfo=UTC),
             reverse=True,
         )
 
@@ -141,7 +141,7 @@ def _parse_datetime(value: struct_time | tuple | None) -> datetime | None:
     if value is None:
         return None
     try:
-        return datetime(*value[:6], tzinfo=timezone.utc)
+        return datetime(*value[:6], tzinfo=UTC)
     except (TypeError, ValueError, OverflowError):
         return None
 

@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timedelta, timezone
 from collections.abc import Iterable
+from datetime import UTC, datetime, timedelta
 
 from pyfinews.models import NewsArticle
 
@@ -18,11 +18,11 @@ def filter_by_lookback(
     """
     if isinstance(hours, bool) or hours < 0:
         raise ValueError("hours must be non-negative")
-    reference = now or datetime.now(timezone.utc)
+    reference = now or datetime.now(UTC)
     if reference.tzinfo is None or reference.utcoffset() is None:
         raise ValueError("now must be timezone-aware")
 
-    reference = reference.astimezone(timezone.utc)
+    reference = reference.astimezone(UTC)
     cutoff = reference - timedelta(hours=hours)
 
     return [

@@ -1,11 +1,12 @@
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
+
 import pytest
 
 from pyfinews import NewsArticle, filter_by_lookback
 
 
 def test_filter_by_lookback_keeps_recent_timestamped_articles():
-    now = datetime(2026, 10, 17, 12, tzinfo=timezone.utc)
+    now = datetime(2026, 10, 17, 12, tzinfo=UTC)
     recent = NewsArticle(
         "Recent", "https://example.com/recent", 
         published_at=now - timedelta(hours=2)

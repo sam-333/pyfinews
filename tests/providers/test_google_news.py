@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from unittest.mock import patch
 
 import pytest
@@ -32,7 +32,7 @@ def test_provider_parses_and_normalizes_article():
     assert len(articles) == 2
     assert articles[0].title == "Apple earnings beat estimates"
     assert articles[0].source == "Example Finance"
-    assert articles[0].published_at == datetime(2026, 10, 17, 1, tzinfo=timezone.utc)
+    assert articles[0].published_at == datetime(2026, 10, 17, 1, tzinfo=UTC)
     assert articles[0].query == "AAPL"
 
 

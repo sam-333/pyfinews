@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import pytest
 
@@ -17,7 +17,7 @@ class FakeProvider:
 
 
 def test_search_wraps_custom_query_and_deduplicates_by_title():
-    article = NewsArticle("Headline", "https://example.com/story", published_at=datetime.now(timezone.utc))
+    article = NewsArticle("Headline", "https://example.com/story", published_at=datetime.now(UTC))
     provider = FakeProvider([article, article])
     client = NewsClient(provider=provider)
     result = client.search("AAPL", hours=None)
@@ -27,7 +27,7 @@ def test_search_wraps_custom_query_and_deduplicates_by_title():
 
 
 def test_get_uses_query_limit_and_priority_ordering():
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     article = NewsArticle("Headline", "https://example.com/story", published_at=now)
     provider = FakeProvider([article])
     domains = [{"id": "macro", "name": "Macro", "query_terms": ["inflation"]}]

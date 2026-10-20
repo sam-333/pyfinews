@@ -1,0 +1,584 @@
+I001 [*] Import block is un-sorted or un-formatted
+ --> src/pyfinews/article_text.py:3:1
+  |
+1 |   """Optional article-page downloading and main-text extraction with Trafilatura."""
+2 |
+3 | / from __future__ import annotations
+4 | |
+5 | | from dataclasses import dataclass
+6 | | from pyfinews.models import ArticleTextStatus, NewsArticle
+  | |__________________________________________________________^
+help: Organize imports
+  |
+5 | from dataclasses import dataclass
+6 +
+7 | from pyfinews.models import ArticleTextStatus, NewsArticle
+  |
+
+BLE001 Do not catch blind exception: `Exception`
+  --> src/pyfinews/article_text.py:83:16
+   |
+81 |                 config=config,
+82 |             )
+83 |         except Exception as exc:  # Keep one problematic page from aborting a batch.
+   |                ^^^^^^^^^
+84 |             return ArticleTextResult(
+85 |                 url, 
+   |
+
+BLE001 Do not catch blind exception: `Exception`
+   --> src/pyfinews/article_text.py:100:16
+    |
+ 98 |         try:
+ 99 |             text = trafilatura.extract(html, url=url, include_comments=False)
+100 |         except Exception as exc:  # Keep one problematic page from aborting a batch.
+    |                ^^^^^^^^^
+101 |             return ArticleTextResult(
+102 |                 url, 
+    |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> src/pyfinews/client.py:3:1
+   |
+ 1 |   """High-level client for financial news discovery."""
+ 2 |
+ 3 | / from __future__ import annotations
+ 4 | |
+ 5 | | from dataclasses import replace
+ 6 | | from datetime import datetime, timezone
+ 7 | | from typing import Any
+ 8 | |
+ 9 | | from pyfinews.article_text import ArticleTextExtractor, ArticleTextResult
+10 | | from pyfinews.exceptions import NewsFetchError, NewsParseError, PyfinewsError
+11 | | from pyfinews.filters import filter_by_lookback
+12 | | from pyfinews.deduplication import deduplicate_articles
+13 | | from pyfinews.progress import run_with_progress
+14 | | from pyfinews.models import NewsArticle
+15 | | from pyfinews.url_resolution import GoogleNewsURLResolver
+16 | | from pyfinews.providers.google_news import GoogleNewsRSSProvider
+17 | | from pyfinews.publishers.loader import load_publishers
+18 | | from pyfinews.queries.financial import FinancialQueryBuilder
+19 | | from pyfinews.queries.google_news import GoogleNewsQuery
+20 | | from pyfinews.taxonomy.loader import load_taxonomy
+   | |__________________________________________________^
+help: Organize imports
+   |
+9  | from pyfinews.article_text import ArticleTextExtractor, ArticleTextResult
+10 + from pyfinews.deduplication import deduplicate_articles
+11 | from pyfinews.exceptions import NewsFetchError, NewsParseError, PyfinewsError
+12 | from pyfinews.filters import filter_by_lookback
+   - from pyfinews.deduplication import deduplicate_articles
+13 + from pyfinews.models import NewsArticle
+14 | from pyfinews.progress import run_with_progress
+   - from pyfinews.models import NewsArticle
+   - from pyfinews.url_resolution import GoogleNewsURLResolver
+15 | from pyfinews.providers.google_news import GoogleNewsRSSProvider
+--------------------------------------------------------------------------------
+19 | from pyfinews.taxonomy.loader import load_taxonomy
+20 + from pyfinews.url_resolution import GoogleNewsURLResolver
+21 |
+   |
+
+UP017 [*] Use `datetime.UTC` alias
+   --> src/pyfinews/client.py:138:65
+    |
+136 |             articles = filter_by_lookback(articles, hours)
+137 |         articles.sort(key=lambda article: (
+138 |             article.published_at or datetime.min.replace(tzinfo=timezone.utc)
+    |                                                                 ^^^^^^^^^^^^
+139 |         ), reverse=True)
+140 |         articles = deduplicate_articles(articles)
+    |
+help: Convert to `datetime.UTC` alias
+    |
+5   | from dataclasses import replace
+    - from datetime import datetime, timezone
+6   + from datetime import datetime, timezone, UTC
+7   | from typing import Any
+--------------------------------------------------------------------------------
+137 |         articles.sort(key=lambda article: (
+    -             article.published_at or datetime.min.replace(tzinfo=timezone.utc)
+138 +             article.published_at or datetime.min.replace(tzinfo=UTC)
+139 |         ), reverse=True)
+    |
+
+PYI034 `__enter__` methods in classes like `NewsClient` usually return `self` at runtime
+   --> src/pyfinews/client.py:221:9
+    |
+219 |             close()
+220 |
+221 |     def __enter__(self) -> "NewsClient":
+    |         ^^^^^^^^^
+222 |         return self
+    |
+help: Use `Self` as return type
+    |
+6   | from datetime import datetime, timezone
+    - from typing import Any
+7   + from typing import Any, Self
+8   |
+--------------------------------------------------------------------------------
+220 |
+    -     def __enter__(self) -> "NewsClient":
+221 +     def __enter__(self) -> Self:
+222 |         return self
+    |
+note: This is an unsafe fix and may change runtime behavior
+
+UP037 [*] Remove quotes from type annotation
+   --> src/pyfinews/client.py:221:28
+    |
+219 |             close()
+220 |
+221 |     def __enter__(self) -> "NewsClient":
+    |                            ^^^^^^^^^^^^
+222 |         return self
+    |
+help: Remove quotes
+    |
+220 |
+    -     def __enter__(self) -> "NewsClient":
+221 +     def __enter__(self) -> NewsClient:
+222 |         return self
+    |
+
+RUF022 [*] `__all__` is not sorted
+   --> src/pyfinews/client.py:231:11
+    |
+229 | Pyfinews = NewsClient
+230 |
+231 | __all__ = ["NewsClient", "Pyfinews", "NewsFetchError", "NewsParseError", "PyfinewsError"]
+    |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Apply an isort-style sorting to `__all__`
+    |
+230 |
+    - __all__ = ["NewsClient", "Pyfinews", "NewsFetchError", "NewsParseError", "PyfinewsError"]
+231 + __all__ = ["NewsClient", "NewsFetchError", "NewsParseError", "Pyfinews", "PyfinewsError"]
+    |
+
+I001 [*] Import block is un-sorted or un-formatted
+ --> src/pyfinews/filters.py:3:1
+  |
+1 |   """Article filtering helpers."""
+2 |
+3 | / from __future__ import annotations
+4 | |
+5 | | from datetime import datetime, timedelta, timezone
+6 | | from collections.abc import Iterable
+7 | |
+8 | | from pyfinews.models import NewsArticle
+  | |_______________________________________^
+help: Organize imports
+  |
+4 |
+5 + from collections.abc import Iterable
+6 | from datetime import datetime, timedelta, timezone
+  - from collections.abc import Iterable
+7 |
+  |
+
+UP017 [*] Use `datetime.UTC` alias
+  --> src/pyfinews/filters.py:21:37
+   |
+19 |     if isinstance(hours, bool) or hours < 0:
+20 |         raise ValueError("hours must be non-negative")
+21 |     reference = now or datetime.now(timezone.utc)
+   |                                     ^^^^^^^^^^^^
+22 |     if reference.tzinfo is None or reference.utcoffset() is None:
+23 |         raise ValueError("now must be timezone-aware")
+   |
+help: Convert to `datetime.UTC` alias
+   |
+4  |
+   - from datetime import datetime, timedelta, timezone
+5  + from datetime import datetime, timedelta, timezone, UTC
+6  | from collections.abc import Iterable
+--------------------------------------------------------------------------------
+20 |         raise ValueError("hours must be non-negative")
+   -     reference = now or datetime.now(timezone.utc)
+21 +     reference = now or datetime.now(UTC)
+22 |     if reference.tzinfo is None or reference.utcoffset() is None:
+   |
+
+UP017 [*] Use `datetime.UTC` alias
+  --> src/pyfinews/filters.py:25:38
+   |
+23 |         raise ValueError("now must be timezone-aware")
+24 |
+25 |     reference = reference.astimezone(timezone.utc)
+   |                                      ^^^^^^^^^^^^
+26 |     cutoff = reference - timedelta(hours=hours)
+   |
+help: Convert to `datetime.UTC` alias
+   |
+4  |
+   - from datetime import datetime, timedelta, timezone
+5  + from datetime import datetime, timedelta, timezone, UTC
+6  | from collections.abc import Iterable
+--------------------------------------------------------------------------------
+24 |
+   -     reference = reference.astimezone(timezone.utc)
+25 +     reference = reference.astimezone(UTC)
+26 |     cutoff = reference - timedelta(hours=hours)
+   |
+
+UP017 [*] Use `datetime.UTC` alias
+  --> src/pyfinews/models.py:79:71
+   |
+77 |                     raise ValueError(f"{field_name} must be timezone-aware")
+78 |                 
+79 |                 object.__setattr__(self, field_name, value.astimezone(timezone.utc))
+   |                                                                       ^^^^^^^^^^^^
+80 |         
+81 |         object.__setattr__(self, "title", self.title.strip())
+   |
+help: Convert to `datetime.UTC` alias
+   |
+5  | from dataclasses import dataclass
+   - from datetime import datetime, timezone
+6  + from datetime import datetime, timezone, UTC
+7  | from enum import StrEnum
+--------------------------------------------------------------------------------
+78 |                 
+   -                 object.__setattr__(self, field_name, value.astimezone(timezone.utc))
+79 +                 object.__setattr__(self, field_name, value.astimezone(UTC))
+80 |         
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+  --> src/pyfinews/providers/google_news.py:3:1
+   |
+ 1 |   """Google News RSS transport and parsing."""
+ 2 |
+ 3 | / from __future__ import annotations
+ 4 | |
+ 5 | | from datetime import datetime, timedelta, timezone
+ 6 | | import logging
+ 7 | | from time import struct_time
+ 8 | | from urllib.error import HTTPError, URLError
+ 9 | | from urllib.request import Request, urlopen
+10 | |
+11 | | import feedparser
+12 | |
+13 | | from pyfinews.exceptions import NewsFetchError, NewsParseError
+14 | | from pyfinews.models import NewsArticle
+15 | | from pyfinews.queries.google_news import GoogleNewsQuery
+   | |________________________________________________________^
+16 |
+17 |   logger = logging.getLogger(__name__)
+   |
+help: Organize imports
+  |
+4 |
+5 + import logging
+6 | from datetime import datetime, timedelta, timezone
+  - import logging
+7 | from time import struct_time
+  |
+
+UP017 [*] Use `datetime.UTC` alias
+  --> src/pyfinews/providers/google_news.py:62:37
+   |
+60 |             },
+61 |         )
+62 |         retrieved_at = datetime.now(timezone.utc)
+   |                                     ^^^^^^^^^^^^
+63 |
+64 |         try:
+   |
+help: Convert to `datetime.UTC` alias
+   |
+4  |
+   - from datetime import datetime, timedelta, timezone
+5  + from datetime import datetime, timedelta, timezone, UTC
+6  | import logging
+--------------------------------------------------------------------------------
+61 |         )
+   -         retrieved_at = datetime.now(timezone.utc)
+62 +         retrieved_at = datetime.now(UTC)
+63 |
+   |
+
+UP017 [*] Use `datetime.UTC` alias
+   --> src/pyfinews/providers/google_news.py:127:44
+    |
+125 |         articles.sort(
+126 |             key=lambda article: article.published_at
+127 |             or datetime.min.replace(tzinfo=timezone.utc),
+    |                                            ^^^^^^^^^^^^
+128 |             reverse=True,
+129 |         )
+    |
+help: Convert to `datetime.UTC` alias
+    |
+4   |
+    - from datetime import datetime, timedelta, timezone
+5   + from datetime import datetime, timedelta, timezone, UTC
+6   | import logging
+--------------------------------------------------------------------------------
+126 |             key=lambda article: article.published_at
+    -             or datetime.min.replace(tzinfo=timezone.utc),
+127 +             or datetime.min.replace(tzinfo=UTC),
+128 |             reverse=True,
+    |
+
+UP017 [*] Use `datetime.UTC` alias
+   --> src/pyfinews/providers/google_news.py:144:44
+    |
+142 |         return None
+143 |     try:
+144 |         return datetime(*value[:6], tzinfo=timezone.utc)
+    |                                            ^^^^^^^^^^^^
+145 |     except (TypeError, ValueError, OverflowError):
+146 |         return None
+    |
+help: Convert to `datetime.UTC` alias
+    |
+4   |
+    - from datetime import datetime, timedelta, timezone
+5   + from datetime import datetime, timedelta, timezone, UTC
+6   | import logging
+--------------------------------------------------------------------------------
+143 |     try:
+    -         return datetime(*value[:6], tzinfo=timezone.utc)
+144 +         return datetime(*value[:6], tzinfo=UTC)
+145 |     except (TypeError, ValueError, OverflowError):
+    |
+
+F821 Undefined name `TaxonomyLoadError`
+  --> src/pyfinews/publishers/loader.py:26:19
+   |
+24 |             )
+25 |         except (OSError, UnicodeError) as exc:
+26 |             raise TaxonomyLoadError(
+   |                   ^^^^^^^^^^^^^^^^^
+27 |                 f"Unable to read publishers file {source}: {exc}"
+28 |             ) from exc
+   |
+
+TRY004 Prefer `TypeError` exception for invalid type
+  --> src/pyfinews/queries/financial.py:40:17
+   |
+38 |             priority = publisher.get("priority", 1)
+39 |             if isinstance(priority, bool) or not isinstance(priority, int):
+40 |                 raise ValueError(f"publishers[{index}].priority must be an integer")
+   |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+41 |
+42 |         self._publishers = tuple(
+   |
+
+TRY004 Prefer `TypeError` exception for invalid type
+   --> src/pyfinews/queries/financial.py:137:17
+    |
+135 |                 raise ValueError(f"publishers[{index}].name must be a non-empty string")
+136 |             if isinstance(priority, bool) or not isinstance(priority, int):
+137 |                 raise ValueError(f"publishers[{index}].priority must be an integer")
+    |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+138 |
+139 |             seen.add(publisher_id)
+    |
+
+BLE001 Do not catch blind exception: `Exception`
+  --> src/pyfinews/url_resolution.py:59:16
+   |
+57 |                 timeout=self.timeout
+58 |             )
+59 |         except Exception as exc:  # Keep a single resolver error from aborting a batch.
+   |                ^^^^^^^^^
+60 |             return URLResolutionResult(
+61 |                 rss_url=url,
+   |
+
+UP017 [*] Use `datetime.UTC` alias
+  --> tests/providers/test_google_news.py:35:73
+   |
+33 |     assert articles[0].title == "Apple earnings beat estimates"
+34 |     assert articles[0].source == "Example Finance"
+35 |     assert articles[0].published_at == datetime(2026, 10, 17, 1, tzinfo=timezone.utc)
+   |                                                                         ^^^^^^^^^^^^
+36 |     assert articles[0].query == "AAPL"
+   |
+help: Convert to `datetime.UTC` alias
+   |
+   - from datetime import datetime, timezone
+1  + from datetime import datetime, timezone, UTC
+2  | from unittest.mock import patch
+--------------------------------------------------------------------------------
+34 |     assert articles[0].source == "Example Finance"
+   -     assert articles[0].published_at == datetime(2026, 10, 17, 1, tzinfo=timezone.utc)
+35 +     assert articles[0].published_at == datetime(2026, 10, 17, 1, tzinfo=UTC)
+36 |     assert articles[0].query == "AAPL"
+   |
+
+SIM117 Use a single `with` statement with multiple contexts instead of nested `with` statements
+  --> tests/providers/test_google_news.py:40:5
+   |
+39 |   def test_invalid_xml_raises_parse_error():
+40 | /     with patch("pyfinews.providers.google_news.urlopen", return_value=FakeResponse(b"<rss>")):
+41 | |         with pytest.raises(NewsParseError):
+   | |___________________________________________^
+42 |               GoogleNewsRSSProvider().search(GoogleNewsQuery("AAPL"), lookback_hours=None)
+   |
+help: Combine `with` statements
+
+SIM117 Use a single `with` statement with multiple contexts instead of nested `with` statements
+  --> tests/providers/test_google_news.py:46:5
+   |
+45 |   def test_missing_channel_raises_parse_error():
+46 | /     with patch("pyfinews.providers.google_news.urlopen", return_value=FakeResponse(b"<rss/>")):
+47 | |         with pytest.raises(NewsParseError, match="channel"):
+   | |____________________________________________________________^
+48 |               GoogleNewsRSSProvider().search(GoogleNewsQuery("AAPL"), lookback_hours=None)
+   |
+help: Combine `with` statements
+
+SIM117 Use a single `with` statement with multiple contexts instead of nested `with` statements
+  --> tests/providers/test_google_news.py:63:5
+   |
+61 |       from urllib.error import URLError
+62 |
+63 | /     with patch("pyfinews.providers.google_news.urlopen", side_effect=URLError("offline")):
+64 | |         with pytest.raises(NewsFetchError):
+   | |___________________________________________^
+65 |               GoogleNewsRSSProvider().search(GoogleNewsQuery("AAPL"), lookback_hours=None)
+   |
+help: Combine `with` statements
+
+UP017 [*] Use `datetime.UTC` alias
+  --> tests/test_client.py:20:94
+   |
+19 | def test_search_wraps_custom_query_and_deduplicates_by_title():
+20 |     article = NewsArticle("Headline", "https://example.com/story", published_at=datetime.now(timezone.utc))
+   |                                                                                              ^^^^^^^^^^^^
+21 |     provider = FakeProvider([article, article])
+22 |     client = NewsClient(provider=provider)
+   |
+help: Convert to `datetime.UTC` alias
+   |
+   - from datetime import datetime, timezone
+1  + from datetime import datetime, timezone, UTC
+2  |
+--------------------------------------------------------------------------------
+19 | def test_search_wraps_custom_query_and_deduplicates_by_title():
+   -     article = NewsArticle("Headline", "https://example.com/story", published_at=datetime.now(timezone.utc))
+20 +     article = NewsArticle("Headline", "https://example.com/story", published_at=datetime.now(UTC))
+21 |     provider = FakeProvider([article, article])
+   |
+
+UP017 [*] Use `datetime.UTC` alias
+  --> tests/test_client.py:30:24
+   |
+29 | def test_get_uses_query_limit_and_priority_ordering():
+30 |     now = datetime.now(timezone.utc)
+   |                        ^^^^^^^^^^^^
+31 |     article = NewsArticle("Headline", "https://example.com/story", published_at=now)
+32 |     provider = FakeProvider([article])
+   |
+help: Convert to `datetime.UTC` alias
+   |
+   - from datetime import datetime, timezone
+1  + from datetime import datetime, timezone, UTC
+2  |
+--------------------------------------------------------------------------------
+29 | def test_get_uses_query_limit_and_priority_ordering():
+   -     now = datetime.now(timezone.utc)
+30 +     now = datetime.now(UTC)
+31 |     article = NewsArticle("Headline", "https://example.com/story", published_at=now)
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+ --> tests/test_filters.py:1:1
+  |
+1 | / from datetime import datetime, timedelta, timezone
+2 | | import pytest
+3 | |
+4 | | from pyfinews import NewsArticle, filter_by_lookback
+  | |____________________________________________________^
+help: Organize imports
+  |
+1 | from datetime import datetime, timedelta, timezone
+2 +
+3 | import pytest
+  |
+
+UP017 [*] Use `datetime.UTC` alias
+  --> tests/test_filters.py:8:45
+   |
+ 7 | def test_filter_by_lookback_keeps_recent_timestamped_articles():
+ 8 |     now = datetime(2026, 10, 17, 12, tzinfo=timezone.utc)
+   |                                             ^^^^^^^^^^^^
+ 9 |     recent = NewsArticle(
+10 |         "Recent", "https://example.com/recent", 
+   |
+help: Convert to `datetime.UTC` alias
+  |
+  - from datetime import datetime, timedelta, timezone
+1 + from datetime import datetime, timedelta, timezone, UTC
+2 | import pytest
+--------------------------------------------------------------------------------
+7 | def test_filter_by_lookback_keeps_recent_timestamped_articles():
+  -     now = datetime(2026, 10, 17, 12, tzinfo=timezone.utc)
+8 +     now = datetime(2026, 10, 17, 12, tzinfo=UTC)
+9 |     recent = NewsArticle(
+  |
+
+UP017 [*] Use `datetime.UTC` alias
+  --> tests/test_models.py:11:56
+   |
+ 9 |     article = NewsArticle(
+10 |         " Headline ", " https://example.com/story ",
+11 |         published_at=datetime(2026, 10, 17, 10, tzinfo=timezone.utc),
+   |                                                        ^^^^^^^^^^^^
+12 |     )
+   |
+help: Convert to `datetime.UTC` alias
+   |
+   - from datetime import datetime, timezone
+1  + from datetime import datetime, timezone, UTC
+2  |
+--------------------------------------------------------------------------------
+10 |         " Headline ", " https://example.com/story ",
+   -         published_at=datetime(2026, 10, 17, 10, tzinfo=timezone.utc),
+11 +         published_at=datetime(2026, 10, 17, 10, tzinfo=UTC),
+12 |     )
+   |
+
+UP017 [*] Use `datetime.UTC` alias
+  --> tests/test_models.py:16:43
+   |
+14 |     assert article.title == "Headline"
+15 |     assert article.url == "https://example.com/story"
+16 |     assert article.published_at.tzinfo is timezone.utc
+   |                                           ^^^^^^^^^^^^
+help: Convert to `datetime.UTC` alias
+   |
+   - from datetime import datetime, timezone
+1  + from datetime import datetime, timezone, UTC
+2  |
+--------------------------------------------------------------------------------
+15 |     assert article.url == "https://example.com/story"
+   -     assert article.published_at.tzinfo is timezone.utc
+16 +     assert article.published_at.tzinfo is UTC
+17 |
+   |
+
+I001 [*] Import block is un-sorted or un-formatted
+ --> tests/test_url_resolution.py:1:1
+  |
+1 | / from types import SimpleNamespace
+2 | | import sys
+3 | |
+4 | | import pytest
+5 | |
+6 | | from pyfinews import GoogleNewsURLResolver
+  | |__________________________________________^
+help: Organize imports
+  |
+1 + import sys
+2 | from types import SimpleNamespace
+  - import sys
+3 |
+  |
+
+Found 31 errors.
+[*] 21 fixable with `--fix` (1 unsafe fix available with `--fix --unsafe-fixes`).

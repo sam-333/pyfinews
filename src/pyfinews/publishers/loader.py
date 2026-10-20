@@ -23,7 +23,7 @@ def _read_publishers_text(path: str | Path | None) -> tuple[str, str]:
                 .read_text(encoding="utf-8")
             )
         except (OSError, UnicodeError) as exc:
-            raise TaxonomyLoadError(
+            raise PublisherLoadError(
                 f"Unable to read publishers file {source}: {exc}"
             ) from exc
         return text, source

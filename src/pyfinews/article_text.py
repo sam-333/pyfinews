@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+
 from pyfinews.models import ArticleTextStatus, NewsArticle
 
 

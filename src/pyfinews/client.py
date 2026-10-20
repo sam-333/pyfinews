@@ -3,21 +3,21 @@
 from __future__ import annotations
 
 from dataclasses import replace
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Any
 
 from pyfinews.article_text import ArticleTextExtractor, ArticleTextResult
+from pyfinews.deduplication import deduplicate_articles
 from pyfinews.exceptions import NewsFetchError, NewsParseError, PyfinewsError
 from pyfinews.filters import filter_by_lookback
-from pyfinews.deduplication import deduplicate_articles
-from pyfinews.progress import run_with_progress
 from pyfinews.models import NewsArticle
-from pyfinews.url_resolution import GoogleNewsURLResolver
+from pyfinews.progress import run_with_progress
 from pyfinews.providers.google_news import GoogleNewsRSSProvider
 from pyfinews.publishers.loader import load_publishers
 from pyfinews.queries.financial import FinancialQueryBuilder
 from pyfinews.queries.google_news import GoogleNewsQuery
 from pyfinews.taxonomy.loader import load_taxonomy
+from pyfinews.url_resolution import GoogleNewsURLResolver
 
 
 class NewsClient:
@@ -135,7 +135,7 @@ class NewsClient:
         if hours is not None:
             articles = filter_by_lookback(articles, hours)
         articles.sort(key=lambda article: (
-            article.published_at or datetime.min.replace(tzinfo=timezone.utc)
+            article.published_at or datetime.min.replace(tzinfo=UTC)
         ), reverse=True)
         articles = deduplicate_articles(articles)
         
@@ -218,7 +218,7 @@ class NewsClient:
         if callable(close):
             close()
 
-    def __enter__(self) -> "NewsClient":
+    def __enter__(self) -> NewsClient:
         return self
 
     def __exit__(self, exc_type: object, exc: object, traceback: object) -> None:
@@ -228,4 +228,4 @@ class NewsClient:
 # Compatibility-friendly short name for users who prefer a package-level client name.
 Pyfinews = NewsClient
 
-__all__ = ["NewsClient", "Pyfinews", "NewsFetchError", "NewsParseError", "PyfinewsError"]
+__all__ = ["NewsClient", "NewsFetchError", "NewsParseError", "Pyfinews", "PyfinewsError"]

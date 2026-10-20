@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from enum import StrEnum
 
 
@@ -76,7 +76,7 @@ class NewsArticle:
                 if value.tzinfo is None or value.utcoffset() is None:
                     raise ValueError(f"{field_name} must be timezone-aware")
                 
-                object.__setattr__(self, field_name, value.astimezone(timezone.utc))
+                object.__setattr__(self, field_name, value.astimezone(UTC))
         
         object.__setattr__(self, "title", self.title.strip())
         object.__setattr__(self, "url", self.url.strip())

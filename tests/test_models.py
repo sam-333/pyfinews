@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 import pytest
 
@@ -8,12 +8,12 @@ from pyfinews import ArticleTextStatus, NewsArticle
 def test_article_normalizes_timestamps_to_utc():
     article = NewsArticle(
         " Headline ", " https://example.com/story ",
-        published_at=datetime(2026, 10, 17, 10, tzinfo=timezone.utc),
+        published_at=datetime(2026, 10, 17, 10, tzinfo=UTC),
     )
 
     assert article.title == "Headline"
     assert article.url == "https://example.com/story"
-    assert article.published_at.tzinfo is timezone.utc
+    assert article.published_at.tzinfo is UTC
 
 
 def test_article_rejects_empty_title():
