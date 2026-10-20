@@ -161,9 +161,6 @@ class NewsClient:
     def resolve_article_url(self, article: NewsArticle) -> NewsArticle:
         """Resolve one article URL, preserving the RSS URL and metadata.
 
-        Resolution is opt-in and requires the optional ``url-resolution`` extra.
-        A failed resolution is recorded on the returned article; the original
-        article is never discarded.
         """
         if not isinstance(article, NewsArticle):
             raise TypeError("article must be a NewsArticle")

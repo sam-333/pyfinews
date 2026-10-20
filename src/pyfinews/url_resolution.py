@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from googlenewsdecoder import gnewsdecoder
 from urllib.parse import urlparse
 
 
@@ -17,11 +18,7 @@ class URLResolutionResult:
 
 
 class GoogleNewsURLResolver:
-    """Resolve Google News RSS article URLs using ``googlenewsdecoder``.
-
-    The decoder is an optional dependency. A resolution failure is returned as
-    a result so batch processing can continue for other articles.
-    """
+    """Resolve Google News RSS article URLs using ``googlenewsdecoder``."""
 
     def __init__(self, *, interval: float = 1.0, timeout: float = 15.0) -> None:
         if isinstance(interval, bool) or not isinstance(interval, (int, float)) or interval < 0:
@@ -41,14 +38,6 @@ class GoogleNewsURLResolver:
         
         if parsed.scheme not in {"http", "https"} or not parsed.netloc:
             raise ValueError("url must be an absolute HTTP(S) URL")
-
-        try:
-            from googlenewsdecoder import gnewsdecoder
-        except ImportError as exc:
-            raise ImportError(
-                "Google News URL resolution requires the optional 'url-resolution' extra. "
-                "Install it with `uv sync --extra url-resolution`."
-            ) from exc
 
         try:
             decoded = gnewsdecoder(

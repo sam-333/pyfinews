@@ -519,37 +519,33 @@ wheels = [
 
 [[package]]
 name = "pyfinews"
-version = "0.1.0"
+version = "0.1.2"
 source = { editable = "." }
 dependencies = [
     { name = "feedparser" },
+    { name = "googlenewsdecoder" },
+    { name = "selectolax" },
+    { name = "trafilatura" },
 ]
 
 [package.optional-dependencies]
-article-text = [
-    { name = "trafilatura" },
-]
 dev = [
     { name = "build" },
     { name = "pytest" },
     { name = "ruff" },
-]
-url-resolution = [
-    { name = "googlenewsdecoder" },
-    { name = "selectolax" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "build", marker = "extra == 'dev'", specifier = ">=1.2" },
     { name = "feedparser", specifier = ">=6.0.11,<7.0" },
-    { name = "googlenewsdecoder", marker = "extra == 'url-resolution'", specifier = ">=0.1.7" },
+    { name = "googlenewsdecoder", specifier = ">=0.1.7" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },
     { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.6" },
-    { name = "selectolax", marker = "extra == 'url-resolution'", specifier = "<1.0" },
-    { name = "trafilatura", marker = "extra == 'article-text'", specifier = ">=2.0,<3.0" },
+    { name = "selectolax", specifier = "<1.0" },
+    { name = "trafilatura", specifier = ">=2.0,<3.0" },
 ]
-provides-extras = ["dev", "article-text", "url-resolution"]
+provides-extras = ["dev"]
 
 [[package]]
 name = "pygments"

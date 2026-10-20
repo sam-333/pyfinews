@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import trafilatura
 
 from pyfinews.models import ArticleTextStatus, NewsArticle
 
@@ -61,14 +62,6 @@ class ArticleTextExtractor:
         url = url.strip()
         if not url.startswith(("http://", "https://")):
             raise ValueError("article URL must use http or https")
-
-        try:
-            import trafilatura
-        except ImportError as exc:
-            raise ImportError(
-                "Article text extraction requires the optional 'article-text' extra. "
-                "Install it with `uv sync --extra article-text` or `uv add trafilatura`."
-            ) from exc
 
         try:
             from trafilatura.settings import use_config
