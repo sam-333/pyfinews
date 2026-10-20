@@ -6,10 +6,8 @@ from dataclasses import dataclass
 
 import trafilatura
 
-from pyfinews import __version__
+from pyfinews._version import DEFAULT_USER_AGENT
 from pyfinews.models import ArticleTextStatus, NewsArticle
-
-DEFAULT_USER_AGENT = f"pyfinews/{__version__}"
 
 
 @dataclass(frozen=True, slots=True)

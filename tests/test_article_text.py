@@ -10,20 +10,24 @@ def trafilatura_mocks(monkeypatch):
 
     def fetch_url(url, **kwargs):
         calls["fetch"].append((url, kwargs))
+
         return "<html><body>Article</body></html>"
 
     def extract(html, **kwargs):
         calls["extract"].append((html, kwargs))
+
         return "Article body text"
 
     monkeypatch.setattr(article_text_module.trafilatura, "fetch_url", fetch_url)
     monkeypatch.setattr(article_text_module.trafilatura, "extract", extract)
+
     return calls
 
 
 def test_extract_returns_main_text_and_passes_config(monkeypatch, trafilatura_mocks):
-    import trafilatura.settings
     from configparser import ConfigParser
+
+    import trafilatura.settings
 
     configs = []
 

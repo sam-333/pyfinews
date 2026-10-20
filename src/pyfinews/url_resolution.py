@@ -3,8 +3,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from googlenewsdecoder import gnewsdecoder
 from urllib.parse import urlparse
+
+from googlenewsdecoder import gnewsdecoder
 
 
 @dataclass(frozen=True, slots=True)

@@ -10,12 +10,10 @@ from urllib.request import Request, urlopen
 
 import feedparser
 
-from pyfinews import __version__
+from pyfinews._version import DEFAULT_USER_AGENT
 from pyfinews.exceptions import NewsFetchError, NewsParseError
 from pyfinews.models import NewsArticle
 from pyfinews.queries.google_news import GoogleNewsQuery
-
-DEFAULT_USER_AGENT = f"pyfinews/{__version__}"
 
 logger = logging.getLogger(__name__)
 
