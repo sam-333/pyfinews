@@ -20,7 +20,12 @@ class URLResolutionResult:
 class GoogleNewsURLResolver:
     """Resolve Google News RSS article URLs using ``googlenewsdecoder``."""
 
-    def __init__(self, *, interval: float = 1.0, timeout: float = 15.0) -> None:
+    def __init__(
+        self, 
+        *, 
+        interval: float = 1.0, 
+        timeout: float = 15.0
+    ) -> None:
         if isinstance(interval, bool) or not isinstance(interval, (int, float)) or interval < 0:
             raise ValueError("interval must be non-negative")
         if isinstance(timeout, bool) or not isinstance(timeout, (int, float)) or timeout <= 0:
