@@ -159,9 +159,7 @@ class NewsClient:
         return articles
 
     def resolve_article_url(self, article: NewsArticle) -> NewsArticle:
-        """Resolve one article URL, preserving the RSS URL and metadata.
-
-        """
+        """Resolve one article URL, preserving the RSS URL and metadata."""
         if not isinstance(article, NewsArticle):
             raise TypeError("article must be a NewsArticle")
         
