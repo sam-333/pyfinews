@@ -1,5 +1,7 @@
 """pyfinews: financial-news discovery through Google News RSS."""
 
+from importlib.metadata import PackageNotFoundError, version
+
 from pyfinews.article_text import ArticleTextExtractor, ArticleTextResult
 from pyfinews.client import NewsClient, Pyfinews
 from pyfinews.deduplication import deduplicate_articles, normalize_title
@@ -13,7 +15,10 @@ from pyfinews.queries.google_news import GoogleNewsQuery
 from pyfinews.taxonomy.loader import TaxonomyLoadError, load_taxonomy
 from pyfinews.url_resolution import GoogleNewsURLResolver, URLResolutionResult
 
-__version__ = "0.1.0"
+try:
+    __version__ = version("pyfinews")
+except PackageNotFoundError:
+    __version__ = "0+unknown"
 
 __all__ = [
     "ArticleTextExtractor", "ArticleTextResult", "ArticleTextStatus", "FinancialQueryBuilder",
