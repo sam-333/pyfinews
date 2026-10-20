@@ -37,15 +37,19 @@ def test_provider_parses_and_normalizes_article():
 
 
 def test_invalid_xml_raises_parse_error():
-    with patch("pyfinews.providers.google_news.urlopen", return_value=FakeResponse(b"<rss>")):
-        with pytest.raises(NewsParseError):
-            GoogleNewsRSSProvider().search(GoogleNewsQuery("AAPL"), lookback_hours=None)
+    with (
+        patch("pyfinews.providers.google_news.urlopen", return_value=FakeResponse(b"<rss>")),
+        pytest.raises(NewsParseError),
+    ):
+        GoogleNewsRSSProvider().search(GoogleNewsQuery("AAPL"), lookback_hours=None)
 
 
 def test_missing_channel_raises_parse_error():
-    with patch("pyfinews.providers.google_news.urlopen", return_value=FakeResponse(b"<rss/>")):
-        with pytest.raises(NewsParseError, match="channel"):
-            GoogleNewsRSSProvider().search(GoogleNewsQuery("AAPL"), lookback_hours=None)
+    with (
+        patch("pyfinews.providers.google_news.urlopen", return_value=FakeResponse(b"<rss/>")),
+        pytest.raises(NewsParseError, match="channel"),
+    ):
+        GoogleNewsRSSProvider().search(GoogleNewsQuery("AAPL"), lookback_hours=None)
 
 
 def test_valid_empty_rss_feed_returns_no_articles():
@@ -60,9 +64,11 @@ def test_valid_empty_rss_feed_returns_no_articles():
 def test_transport_error_is_wrapped():
     from urllib.error import URLError
 
-    with patch("pyfinews.providers.google_news.urlopen", side_effect=URLError("offline")):
-        with pytest.raises(NewsFetchError):
-            GoogleNewsRSSProvider().search(GoogleNewsQuery("AAPL"), lookback_hours=None)
+    with (
+        patch("pyfinews.providers.google_news.urlopen", side_effect=URLError("offline")),
+        pytest.raises(NewsFetchError),
+    ):
+        GoogleNewsRSSProvider().search(GoogleNewsQuery("AAPL"), lookback_hours=None)
 
 
 def test_freshness_operator_windows():

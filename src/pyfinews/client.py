@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import replace
 from datetime import UTC, datetime
-from typing import Any
+from typing import Any, Self
 
 from pyfinews.article_text import ArticleTextExtractor, ArticleTextResult
 from pyfinews.deduplication import deduplicate_articles
@@ -218,7 +218,7 @@ class NewsClient:
         if callable(close):
             close()
 
-    def __enter__(self) -> NewsClient:
+    def __enter__(self) -> Self:
         return self
 
     def __exit__(self, exc_type: object, exc: object, traceback: object) -> None:

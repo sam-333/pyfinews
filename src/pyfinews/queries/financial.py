@@ -36,8 +36,9 @@ class FinancialQueryBuilder:
 
         for index, publisher in enumerate(enabled_publishers):
             priority = publisher.get("priority", 1)
+
             if isinstance(priority, bool) or not isinstance(priority, int):
-                raise ValueError(f"publishers[{index}].priority must be an integer")
+                raise TypeError(f"publishers[{index}].priority must be an integer")
 
         self._publishers = tuple(
             sorted(
@@ -134,7 +135,7 @@ class FinancialQueryBuilder:
             if not isinstance(name, str) or not name.strip():
                 raise ValueError(f"publishers[{index}].name must be a non-empty string")
             if isinstance(priority, bool) or not isinstance(priority, int):
-                raise ValueError(f"publishers[{index}].priority must be an integer")
+                raise TypeError(f"publishers[{index}].priority must be an integer")
 
             seen.add(publisher_id)
             publisher["name"] = name.strip()
