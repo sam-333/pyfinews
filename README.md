@@ -107,7 +107,7 @@ for article, result in zip(articles, results):
         print(article.title, result.status, result.error)
 ```
 
-The client also provides `extract_article_text(article)` for one `NewsArticle` or an HTTP(S) URL. `extract_articles_text(articles)` processes a list sequentially and preserves input order and duplicates. Each `ArticleTextResult` contains `url`, `text`, `status`, and `error`. `ArticleTextStatus` is a public string enum with `SUCCESS`, `FETCH_FAILED`, and `EXTRACTION_FAILED` statuses. A page-level failure is returned as a result and does not stop the batch.
+Each `ArticleTextResult` contains `url`, `text`, `status`, and `error`. `ArticleTextStatus` is a public string enum with `SUCCESS`, `FETCH_FAILED`, and `EXTRACTION_FAILED` statuses. A page-level failure is returned as a result and does not stop the batch.
 
 Trafilatura handles publisher-page downloading and main-text extraction. Extraction may fail because of site structure, network issues, or publisher restrictions. It does not bypass paywalls, logins, or other access controls.
 
