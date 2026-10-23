@@ -98,7 +98,7 @@ def test_resolution_failure_keeps_article():
             return URLResolutionResult(url, None, "resolution_failed", "not decodable")
 
     client = NewsClient(provider=FakeProvider([article]), url_resolver=FakeResolver())
-    result = client.resolve_article_urls([article])
+    result = client._resolve_article_urls([article])
 
     assert len(result) == 1
     assert result[0].url == article.url
@@ -119,7 +119,12 @@ def test_get_accepts_none_max_articles():
     provider = FakeProvider(articles)
     domains = [{"id": "macro", "name": "Macro", "query_terms": ["inflation"]}]
     publishers = [{"id": "r", "name": "Reuters", "priority": 1}]
-    client = NewsClient(provider=provider, taxonomy=domains, publishers=publishers, query_limit=1)
+    client = NewsClient(
+        provider=provider, 
+        taxonomy=domains, 
+        publishers=publishers, 
+        query_limit=1
+    )
     result = client.get(hours=None, max_articles=None)
 
     assert result == articles
@@ -132,10 +137,15 @@ def test_get_extract_text_attaches_text_and_status(monkeypatch):
     provider = FakeProvider([article])
     domains = [{"id": "macro", "name": "Macro", "query_terms": ["inflation"]}]
     publishers = [{"id": "r", "name": "Reuters", "priority": 1}]
-    client = NewsClient(provider=provider, taxonomy=domains, publishers=publishers, query_limit=1)
+    client = NewsClient(
+        provider=provider, 
+        taxonomy=domains, 
+        publishers=publishers, 
+        query_limit=1
+    )
     monkeypatch.setattr(
         client,
-        "extract_articles_text",
+        "_extract_articles_text",
         lambda articles, **kwargs: [ArticleTextResult(
             url=articles[0].url,
             text="Extracted article body",
@@ -179,7 +189,7 @@ def test_get_extract_text_can_resolve_urls_first(monkeypatch):
             status=ArticleTextStatus.SUCCESS,
         )]
 
-    monkeypatch.setattr(client, "extract_articles_text", fake_extract)
+    monkeypatch.setattr(client, "_extract_articles_text", fake_extract)
     result = client.get(hours=None, resolve_urls=True, extract_text=True)
 
     assert seen[0].resolved_url == "https://publisher.example/story"

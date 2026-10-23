@@ -76,7 +76,7 @@ class NewsClient:
         if max_articles is not None:
             articles = articles[:max_articles]
         
-        return self.resolve_article_urls(articles, show_progress=show_progress) if resolve_urls else articles
+        return self._resolve_article_urls(articles, show_progress=show_progress) if resolve_urls else articles
 
     def get(
         self,
@@ -143,10 +143,10 @@ class NewsClient:
             articles = articles[:max_articles]
         
         if resolve_urls:
-            articles = self.resolve_article_urls(articles, show_progress=show_progress)
+            articles = self._resolve_article_urls(articles, show_progress=show_progress)
         
         if extract_text:
-            results = self.extract_articles_text(articles, show_progress=show_progress)
+            results = self._extract_articles_text(articles, show_progress=show_progress)
             articles = [
                 replace(
                     article,
@@ -158,7 +158,14 @@ class NewsClient:
         
         return articles
 
-    def resolve_article_url(self, article: NewsArticle) -> NewsArticle:
+    def close(self) -> None:
+        """Close the provider if it offers a close method."""
+        close = getattr(self._provider, "close", None)
+        
+        if callable(close):
+            close()
+
+    def _resolve_article_url(self, article: NewsArticle) -> NewsArticle:
         """Resolve one article URL, preserving the RSS URL and metadata."""
         if not isinstance(article, NewsArticle):
             raise TypeError("article must be a NewsArticle")
@@ -177,7 +184,7 @@ class NewsClient:
             url_resolution_error=result.error,
         )
 
-    def resolve_article_urls(
+    def _resolve_article_urls(
         self, articles: list[NewsArticle], 
         *, 
         show_progress: bool = True
@@ -185,16 +192,16 @@ class NewsClient:
         """Resolve article URLs sequentially and report progress to stderr."""
         return run_with_progress(
             articles, 
-            self.resolve_article_url, 
+            self._resolve_article_url, 
             label="Resolving URLs", 
             enabled=show_progress
         )
 
-    def extract_article_text(self, article: NewsArticle | str) -> ArticleTextResult:
+    def _extract_article_text(self, article: NewsArticle | str) -> ArticleTextResult:
         """Download one article page and extract its main text with Trafilatura."""
         return self._article_text_extractor.extract(article)
 
-    def extract_articles_text(
+    def _extract_articles_text(
         self, articles: list[NewsArticle | str],
         *, 
         show_progress: bool = True
@@ -202,16 +209,10 @@ class NewsClient:
         """Extract article text sequentially, retaining one result per input item."""
         return run_with_progress(
             articles, 
-            self.extract_article_text, 
+            self._extract_article_text, 
             label="Extracting article text", 
             enabled=show_progress
         )
-
-    def close(self) -> None:
-        """Close the provider if it offers a close method."""
-        close = getattr(self._provider, "close", None)
-        if callable(close):
-            close()
 
     def __enter__(self) -> Self:
         return self
